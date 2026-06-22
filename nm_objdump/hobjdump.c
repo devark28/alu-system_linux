@@ -11,19 +11,18 @@
  *         otherwise returns EXIT_FAILURE
  * Author: Frank Onyema Orji
  */
-
 int main(int argc, char **argv, char **env)
 {
-    char *av[] = {"/usr/bin/objdump", "-s", "-f", "", NULL};
+	char *av[] = {"/usr/bin/objdump", "-s", "-f", "", NULL};
 
-    (void)argc;
-    av[3] = argv[1];
+	(void) argc;
+	av[3] = argv[1];
 
-    if (execve("/usr/bin/objdump", av, env) == -1)
-    {
-        perror("execv");
-        return (EXIT_FAILURE);
-    }
+	if (execve("/usr/bin/objdump", av, env) == -1)
+	{
+		perror("execv");
+		return (EXIT_FAILURE);
+	}
 
-    return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
