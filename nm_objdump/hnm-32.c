@@ -11,8 +11,8 @@
  * Return: nothing (void)
  * Author: Frank Onyema Orji
  */
-void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table, char *string_table,
-						  Elf32_Shdr *section_headers)
+void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table,
+			  char *string_table, Elf32_Shdr *section_headers)
 {
 	int i;
 	int symbol_count = section_header->sh_size / sizeof(Elf32_Sym);
@@ -79,7 +79,8 @@ void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table, c
 					symbol_type = 'u';
 				}
 				/* Vérifier les types de section et les flags */
-				else if (symbol_section.sh_type == SHT_NOBITS && symbol_section.sh_flags == (SHF_ALLOC | SHF_WRITE))
+				else if (symbol_section.sh_type == SHT_NOBITS &&
+					symbol_section.sh_flags == (SHF_ALLOC | SHF_WRITE))
 				{
 					symbol_type = 'B';
 				}

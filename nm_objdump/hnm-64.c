@@ -12,8 +12,8 @@
  * Return: nothing (void)
  * Author: Frank Onyema Orji
  */
-void print_symbol_table64(Elf64_Shdr *section_header, Elf64_Sym *symbol_table, char *string_table,
-						  Elf64_Shdr *section_headers)
+void print_symbol_table64(Elf64_Shdr *section_header, Elf64_Sym *symbol_table,
+			  char *string_table, Elf64_Shdr *section_headers)
 {
 	int i;
 	int symbol_count = section_header->sh_size / sizeof(Elf64_Sym);
@@ -83,7 +83,8 @@ void print_symbol_table64(Elf64_Shdr *section_header, Elf64_Sym *symbol_table, c
 					symbol_type = 'u';
 				}
 				/* Vérifier les types de section et les flags */
-				else if (symbol_section.sh_type == SHT_NOBITS && symbol_section.sh_flags == (SHF_ALLOC | SHF_WRITE))
+				else if (symbol_section.sh_type == SHT_NOBITS &&
+					symbol_section.sh_flags == (SHF_ALLOC | SHF_WRITE))
 				{
 					symbol_type = 'B';
 				}
@@ -152,7 +153,7 @@ void process_elf_file64(char *file_path)
 
 	if (file == NULL)
 	{
-		fprintf(stderr, "./hnm: %s: failed to open file\n", file_path);
+		fprintf(stderr,"./hnm: %s: failed to open file\n", file_path);
 		return;
 	}
 
@@ -162,7 +163,7 @@ void process_elf_file64(char *file_path)
 
 	if (elf_header.e_ident[EI_CLASS] != ELFCLASS32 && elf_header.e_ident[EI_CLASS] != ELFCLASS64)
 	{
-		fprintf(stderr, "./hnm: %s: unsupported ELF file format\n", file_path);
+		fprintf(stderr,"./hnm: %s: unsupported ELF file format\n", file_path);
 		fclose(file);
 		return;
 	}
@@ -173,7 +174,7 @@ void process_elf_file64(char *file_path)
 
 	if (!is_little_endian && !is_big_endian)
 	{
-		fprintf(stderr, "./hnm: %s: unsupported ELF file endianness\n", file_path);
+		fprintf(stderr,"./hnm: %s: unsupported ELF file endianness\n", file_path);
 		fclose(file);
 		return;
 	}
@@ -183,7 +184,7 @@ void process_elf_file64(char *file_path)
 
 	if (section_headers == NULL)
 	{
-		fprintf(stderr, "./hnm: %s: memory allocation error for section_headers\n", file_path);
+		fprintf(stderr,"./hnm: %s: memory allocation error for section_headers\n", file_path);
 		fclose(file);
 		return;
 	}
@@ -201,7 +202,7 @@ void process_elf_file64(char *file_path)
 	}
 	if (symbol_table_index == -1)
 	{
-		fprintf(stderr, "./hnm: %s: no symbols\n", file_path);
+		fprintf(stderr,"./hnm: %s: no symbols\n", file_path);
 		fclose(file);
 		free(section_headers);
 		return;
