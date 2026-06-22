@@ -12,7 +12,7 @@
  * Author: Frank Onyema Orji
  */
 void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table,
-			  char *string_table, Elf32_Shdr *section_headers)
+						  char *string_table, Elf32_Shdr *section_headers)
 {
 	int i;
 	int symbol_count = section_header->sh_size / sizeof(Elf32_Sym);
@@ -31,8 +31,9 @@ void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table,
 		{
 			symbol_type = '?';
 			/*
-			 * On s'assure que les symboles faibles non définis sont correctement
-			 * marqués comme 'w' avant d'attribuer 'U' aux symboles indéfinis
+			 * On s'assure que les symboles faibles non définis sont
+			 * correctement marqués comme 'w' avant d'attribuer 'U' aux symboles
+			 * indéfinis
 			 */
 			if (ELF32_ST_BIND(symbol.st_info) == STB_WEAK)
 			{
@@ -80,7 +81,7 @@ void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table,
 				}
 				/* Vérifier les types de section et les flags */
 				else if (symbol_section.sh_type == SHT_NOBITS &&
-					symbol_section.sh_flags == (SHF_ALLOC | SHF_WRITE))
+						 symbol_section.sh_flags == (SHF_ALLOC | SHF_WRITE))
 				{
 					symbol_type = 'B';
 				}
@@ -116,7 +117,8 @@ void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table,
 			/* Ne pas afficher l'adresse du symbole si elle équivaut à U ou w */
 			if (symbol_type != 'U' && symbol_type != 'w')
 			{
-				printf("%08x %c %s\n", symbol.st_value, symbol_type, symbol_name);
+				printf("%08x %c %s\n", symbol.st_value, symbol_type,
+					   symbol_name);
 			}
 			else
 			{
@@ -159,7 +161,8 @@ void process_elf_file32(char *file_path)
 	fread(&elf_header, sizeof(Elf32_Ehdr), 1, file);
 
 	/* Il faut vérifier le type de fichier ELF */
-	if (elf_header.e_ident[EI_CLASS] != ELFCLASS32 && elf_header.e_ident[EI_CLASS] != ELFCLASS64)
+	if (elf_header.e_ident[EI_CLASS] != ELFCLASS32 &&
+		elf_header.e_ident[EI_CLASS] != ELFCLASS64)
 	{
 		fprintf(stderr, "./hnm: %s: unsupported ELF file format\n", file_path);
 		fclose(file);
@@ -172,17 +175,21 @@ void process_elf_file32(char *file_path)
 
 	if (!is_little_endian && !is_big_endian)
 	{
-		fprintf(stderr, "./hnm: %s: unsupported ELF file endianness\n", file_path);
+		fprintf(stderr, "./hnm: %s: unsupported ELF file endianness\n",
+				file_path);
 		fclose(file);
 		return;
 	}
 
 	/* Pour la table des sections */
-	Elf32_Shdr *section_headers = malloc(elf_header.e_shentsize * elf_header.e_shnum);
+	Elf32_Shdr *section_headers =
+			malloc(elf_header.e_shentsize * elf_header.e_shnum);
 
 	if (section_headers == NULL)
 	{
-		fprintf(stderr, "./hnm: %s: memory allocation error for section_headers\n", file_path);
+		fprintf(stderr,
+				"./hnm: %s: memory allocation error for section_headers\n",
+				file_path);
 		fclose(file);
 		return;
 	}
@@ -225,7 +232,8 @@ void process_elf_file32(char *file_path)
 	fread(string_table, string_table_header.sh_size, 1, file);
 
 	/* Afficher la table des symboles */
-	print_symbol_table32(&symbol_table_header, symbol_table, string_table, section_headers);
+	print_symbol_table32(&symbol_table_header, symbol_table, string_table,
+						 section_headers);
 
 	fclose(file);
 
