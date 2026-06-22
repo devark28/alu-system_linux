@@ -1,8 +1,8 @@
 #include "hnm.h"
 
 /**
- * print_symbol_table32 - program that prints the symbol table for a 32-bit ELF file
- * considering special section indices and visibility attributes
+ * print_symbol_table32 - program that prints the symbol table for a 32-bit
+ * ELF file considering special section indices and visibility attributes
  * @section_header: a pointer to the section header of the symbol table
  * @symbol_table: a pointer to the beginning of the symbol table
  * @string_table: a pointer to the beginning of the string table,
