@@ -22,8 +22,6 @@ void print_symbol_table32(Elf32_Shdr *section_header, Elf32_Sym *symbol_table,
 	{
 		Elf32_Sym symbol = symbol_table[i];
 		symbol_name = string_table + symbol.st_name;
-
-
 		/*
 		 * Le symbole doit avoir un nom (!= 0),
 		 * et le symbole ne doit pas être le nom d'un fichier source
