@@ -9,3 +9,7 @@ $(FILENAME)_0: $(0_SRC:.c=.o)
 1_SRC = 1-$(FILENAME).c
 $(FILENAME)_1: $(1_SRC:.c=.o)
 	$(CC) $(CFLAGS) $(1_SRC) -o $(FILENAME)_1
+
+2_SRC = 2-$(FILENAME).c
+$(FILENAME)_2: $(2_SRC:.c=.o)
+	$(CC) $(CFLAGS) $(2_SRC) -o $(FILENAME)_2
