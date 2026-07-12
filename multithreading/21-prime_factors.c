@@ -9,11 +9,12 @@
 list_t *prime_factors(char const *s)
 {
 	unsigned long n = strtoul(s, NULL, 10);
-	unsigned long *tmp, p = 2;
+	unsigned long *tmp, p;
+	unsigned long delta = 2;
 	list_t *list = malloc(sizeof(list_t));
 
 	list_init(list);
-	while (p * p <= n)
+	for (p = 2; p <= 3; p++)
 	{
 		while (n % p == 0)
 		{
@@ -22,8 +23,18 @@ list_t *prime_factors(char const *s)
 			list_add(list, (void *)tmp);
 			n /= p;
 		}
+	}
 
-		p += 1 + (p != 2);
+	/* 6k +- 1 wheel: only test candidates coprime to 2 and 3 */
+	for (p = 5; p * p <= n; p += delta, delta = 6 - delta)
+	{
+		while (n % p == 0)
+		{
+			tmp = malloc(sizeof(unsigned long));
+			*tmp = p;
+			list_add(list, (void *)tmp);
+			n /= p;
+		}
 	}
 
 	if (n >= 2)
